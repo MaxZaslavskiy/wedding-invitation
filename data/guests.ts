@@ -36,7 +36,7 @@ export interface Guest {
     "MarYa":{ names: "Маріє та Ярославе!" },
     "BerMk":{ names: "Миколо!" },
     "Mazur":{ names: "Ярославе!" },
-    "VetNast":{ names: "Віталіє та Анастасіє!" },
+    "VetNast":{ names: "Віталію та Анастасіє!" },
     "Fizmat":{ names: "Олександре та Аліно!" },
     "Vovchik":{ names: "Володимире!" },
     "RybakAn":{ names: "Анно!" },
