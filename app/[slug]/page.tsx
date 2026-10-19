@@ -68,7 +68,23 @@ export default function WeddingPage({ params }: PageProps) {
   const extendedPhotos = [...photos, ...photos, ...photos];
 
   // Кількість фото на сторінці (на ПК — 3)
-  const itemsPerPage = 3;
+  const [itemsPerPage, setItemsPerPage] = useState(1);
+
+useEffect(() => {
+  const handleResize = () => {
+    if (window.innerWidth >= 768) {
+      setItemsPerPage(3); // На десктопі 3 фото
+    } else if (window.innerWidth >= 640) {
+      setItemsPerPage(2); // На планшеті 2 фото
+    } else {
+      setItemsPerPage(1); // На мобільному 1 фото
+    }
+  };
+
+  handleResize(); // Початкова перевірка
+  window.addEventListener("resize", handleResize);
+  return () => window.removeEventListener("resize", handleResize);
+}, []);
 
   // Починаємо з першого елемента СЕРЕДНЬОГО блоку
 
@@ -115,12 +131,13 @@ export default function WeddingPage({ params }: PageProps) {
   }, [params]);
 
   useEffect(() => {
-    const targetDate = new Date(WEDDING_CONFIG.date).getTime();
-
+    // Встановлюємо точну дату і час події
+    const targetDate = new Date("2026-11-11T14:00:00+02:00").getTime(); // Київський час (UTC+2)
+  
     const interval = setInterval(() => {
       const now = new Date().getTime();
       const difference = targetDate - now;
-
+  
       if (difference > 0) {
         setTimeLeft({
           days: Math.floor(difference / (1000 * 60 * 60 * 24)),
@@ -128,9 +145,11 @@ export default function WeddingPage({ params }: PageProps) {
           minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
           seconds: Math.floor((difference % (1000 * 60)) / 1000),
         });
+      } else {
+        clearInterval(interval); // Зупиняємо таймер, якщо час минув
       }
     }, 1000);
-
+  
     return () => clearInterval(interval);
   }, []);
 
@@ -630,7 +649,7 @@ export default function WeddingPage({ params }: PageProps) {
     </motion.div>
   </section>
 
-     {/* Карусель фотографій — 3 фото на десктопі, безкінечна та плавна */}
+     {/* Карусель фотографій */}
 <section className="bg-[#F7F4EF] py-20 px-4 sm:px-6 overflow-hidden">
   <motion.div
     initial="hidden"
@@ -651,10 +670,13 @@ export default function WeddingPage({ params }: PageProps) {
       <div className="overflow-hidden rounded-2xl">
         <motion.div
           className="flex"
+          /* 
+            На мобільному зміщуємо на 100% за одне фото, 
+            але якщо хочете адаптивну сітку:
+          */
           animate={{ x: `-${currentPhoto * (100 / itemsPerPage)}%` }}
           transition={{ type: "spring", stiffness: 260, damping: 28 }}
         >
-          {/* Дублюємо масив фото, щоб забезпечити безперервне гортання */}
           {extendedPhotos.map((src, idx) => (
             <div
               key={idx}
@@ -680,7 +702,7 @@ export default function WeddingPage({ params }: PageProps) {
         type="button"
         onClick={handlePrev}
         aria-label="Попереднє фото"
-        className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-3 sm:-translate-x-5 w-11 h-11 rounded-full bg-white/90 backdrop-blur-md border border-[#D8C4AA]/60 flex items-center justify-center text-[#5B4133] text-2xl hover:bg-white hover:scale-110 transition-all shadow-md z-10"
+        className="absolute left-2 sm:-left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white/90 backdrop-blur-md border border-[#D8C4AA]/60 flex items-center justify-center text-[#5B4133] text-2xl hover:bg-white hover:scale-110 transition-all shadow-md z-10"
       >
         ‹
       </button>
@@ -690,7 +712,7 @@ export default function WeddingPage({ params }: PageProps) {
         type="button"
         onClick={handleNext}
         aria-label="Наступне фото"
-        className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-3 sm:translate-x-5 w-11 h-11 rounded-full bg-white/90 backdrop-blur-md border border-[#D8C4AA]/60 flex items-center justify-center text-[#5B4133] text-2xl hover:bg-white hover:scale-110 transition-all shadow-md z-10"
+        className="absolute right-2 sm:-right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white/90 backdrop-blur-md border border-[#D8C4AA]/60 flex items-center justify-center text-[#5B4133] text-2xl hover:bg-white hover:scale-110 transition-all shadow-md z-10"
       >
         ›
       </button>
