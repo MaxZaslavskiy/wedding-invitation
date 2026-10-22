@@ -40,6 +40,12 @@ export interface Guest {
     "Fizmat":{ names: "Олександре та Аліно!" },
     "Vovchik":{ names: "Володимире!" },
     "RybakAn":{ names: "Анно!" },
-    "Shim":{ names: "Андрію!" },
+    "Artem":{ names: "Артеме!" },
+    "Pylip":{ names: "Артеме!" },
+    "Volodimir":{ names: "Володимире!" },
+    "Potapchuk":{ names: "Дорогі Олександре, Юліє та Олександро!" },
+    "Dimon":{ names: "Дмитре!" },
+    "Irina":{ names: "Ірино!" },
+    "Turskiy":{ names: "Сергію!" },
 
   };
