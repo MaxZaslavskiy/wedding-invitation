@@ -47,5 +47,7 @@ export interface Guest {
     "Dimon":{ names: "Дмитре!" },
     "Irina":{ names: "Ірино!" },
     "Turskiy":{ names: "Сергію!" },
+    "Test":{ names: "Test!" },
+    
 
   };
