@@ -48,6 +48,7 @@ export interface Guest {
     "Irina":{ names: "Ірино!" },
     "Turskiy":{ names: "Сергію!" },
     "Test":{ names: "Test!" },
+    "Vurgaft":{ names: "Настюшо та Максиме!" },
     
 
   };
